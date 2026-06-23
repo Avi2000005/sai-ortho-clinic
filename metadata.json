@@ -1,0 +1,6 @@
+{
+  "name": "Sai Joint & Spine Clinic",
+  "description": "Premium Orthopedic, Spine & Robotic Joint Replacement Center in Garkheda, Chh. Sambhajinagar led by Dr. Uday Phute.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
