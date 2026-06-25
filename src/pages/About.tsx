@@ -74,7 +74,7 @@ export default function About({ onOpenAppointment }: AboutProps) {
             <div className="lg:col-span-4 space-y-6">
               <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col items-center">
                 <img
-                  src="/doctor.jpg"
+                  src="/doctor.webp"
                   alt="Dr. Uday Phute"
                   className="w-full h-auto object-contain"
                   referrerPolicy="no-referrer"

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Calendar, CheckCircle2, Ticket } from "lucide-react";
 
@@ -16,12 +16,12 @@ import AppointmentModal from "./components/AppointmentModal";
 import FloatingChatSupport from "./components/FloatingChatSupport";
 
 // Pages
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Treatments from "./pages/Treatments";
-import Blogs from "./pages/Blogs";
-import Testimonials from "./pages/Testimonials";
-import Contact from "./pages/Contact";
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Treatments = lazy(() => import("./pages/Treatments"));
+const Blogs = lazy(() => import("./pages/Blogs"));
+const Testimonials = lazy(() => import("./pages/Testimonials"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 import { Appointment } from "./types";
 import { safeStorage } from "./utils/safeStorage";
@@ -138,47 +138,54 @@ export default function App() {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="w-full"
           >
-            {currentPage === "home" && (
-              <Home 
-                onPageChange={(p) => {
-                  setCurrentPage(p);
-                  setSelectedTreatmentId(null);
-                  setSelectedBlogId(null);
-                }}
-                onOpenAppointment={() => handleOpenAppointment()}
-                onSelectTreatment={handleSelectTreatmentFromHome}
-                onSelectBlog={handleSelectBlogFromHome}
-              />
-            )}
+            <Suspense fallback={
+              <div className="min-h-[60vh] flex flex-col items-center justify-center bg-slate-50 gap-4">
+                <div className="w-10 h-10 border-4 border-[#00D5C9] border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest font-sans">Loading Page...</p>
+              </div>
+            }>
+              {currentPage === "home" && (
+                <Home 
+                  onPageChange={(p) => {
+                    setCurrentPage(p);
+                    setSelectedTreatmentId(null);
+                    setSelectedBlogId(null);
+                  }}
+                  onOpenAppointment={() => handleOpenAppointment()}
+                  onSelectTreatment={handleSelectTreatmentFromHome}
+                  onSelectBlog={handleSelectBlogFromHome}
+                />
+              )}
 
-            {currentPage === "about" && (
-              <About onOpenAppointment={() => handleOpenAppointment()} />
-            )}
+              {currentPage === "about" && (
+                <About onOpenAppointment={() => handleOpenAppointment()} />
+              )}
 
-            {currentPage === "treatments" && (
-              <Treatments 
-                selectedTreatmentId={selectedTreatmentId}
-                onClearSelection={() => setSelectedTreatmentId(null)}
-                onOpenAppointment={(treatmentName) => handleOpenAppointment(treatmentName)}
-              />
-            )}
+              {currentPage === "treatments" && (
+                <Treatments 
+                  selectedTreatmentId={selectedTreatmentId}
+                  onClearSelection={() => setSelectedTreatmentId(null)}
+                  onOpenAppointment={(treatmentName) => handleOpenAppointment(treatmentName)}
+                />
+              )}
 
-            {currentPage === "blogs" && (
-              <Blogs 
-                selectedBlogId={selectedBlogId}
-                onClearSelection={() => setSelectedBlogId(null)}
-                onSelectBlog={setSelectedBlogId}
-                onOpenAppointment={() => handleOpenAppointment()}
-              />
-            )}
+              {currentPage === "blogs" && (
+                <Blogs 
+                  selectedBlogId={selectedBlogId}
+                  onClearSelection={() => setSelectedBlogId(null)}
+                  onSelectBlog={setSelectedBlogId}
+                  onOpenAppointment={() => handleOpenAppointment()}
+                />
+              )}
 
-            {currentPage === "testimonials" && (
-              <Testimonials onOpenAppointment={() => handleOpenAppointment()} />
-            )}
+              {currentPage === "testimonials" && (
+                <Testimonials onOpenAppointment={() => handleOpenAppointment()} />
+              )}
 
-            {currentPage === "contact" && (
-              <Contact onOpenAppointment={() => handleOpenAppointment()} />
-            )}
+              {currentPage === "contact" && (
+                <Contact onOpenAppointment={() => handleOpenAppointment()} />
+              )}
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </main>

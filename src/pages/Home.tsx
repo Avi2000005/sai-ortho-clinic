@@ -92,7 +92,7 @@ export default function Home({ onPageChange, onOpenAppointment, onSelectTreatmen
                 {/* Fallback pattern overlaid on medical-themed image */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent z-10" />
                 <img
-                  src="/doctor.jpg"
+                  src="/doctor.webp"
                   alt="Dr. Uday Phute Orthotropic Consultations"
                   className="w-full h-full object-cover object-top"
                   referrerPolicy="no-referrer"
