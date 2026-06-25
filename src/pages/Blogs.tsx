@@ -322,78 +322,85 @@ export default function Blogs({ selectedBlogId, onClearSelection, onSelectBlog, 
 
             {/* Article Content - Structured and formatted to reflect Markdown text */}
             <div className="prose max-w-none text-slate-700 leading-relaxed space-y-6 text-sm sm:text-base font-sans pb-16">
-              {activeBlog.content.split("\n\n").map((para, id) => {
-                const trimmed = para.trim();
-                
-                // Blockquote detect
-                if (trimmed.startsWith(">")) {
-                  return (
-                    <blockquote key={id} className="border-l-4 border-slate-300 bg-slate-50/80 p-4 rounded-r-xl italic my-4 text-slate-600 pl-4">
-                      {trimmed.replace(/^>\s*/, "").replace(/[“”"]/g, "")}
-                    </blockquote>
-                  );
-                }
-                
-                // Bullet points detect
-                if (trimmed.startsWith("*") || trimmed.startsWith("-")) {
-                  const bullets = trimmed.split("\n");
-                  return (
-                    <ul key={id} className="list-disc pl-5 space-y-2.5 my-4">
-                      {bullets.map((b, bIdx) => {
-                        const cleanBullet = b.replace(/^[\*\-]\s*/, "");
-                        const formattedBullet = cleanBullet.split("**").map((textChunk, chunkIdx) => {
-                          if (chunkIdx % 2 === 1) {
-                            return <strong key={chunkIdx} className="font-extrabold text-slate-950">{textChunk}</strong>;
-                          }
-                          return textChunk;
-                        });
-                        return (
-                          <li key={bIdx} className="text-slate-600 leading-normal pl-1.5 font-sans">
-                            {formattedBullet}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  );
-                }
+              {(() => {
+                // Helper to parse bold markdown formatting
+                const parseInlineMarkdown = (text: string) => {
+                  return text.split("**").map((textChunk, chunkIdx) => {
+                    if (chunkIdx % 2 === 1) {
+                      return <strong key={chunkIdx} className="font-extrabold text-slate-950">{textChunk}</strong>;
+                    }
+                    return textChunk;
+                  });
+                };
 
-                // Heading 3 detect
-                if (trimmed.startsWith("###")) {
-                  return (
-                    <h4 key={id} className="text-base sm:text-lg font-extrabold text-slate-950 pt-5 tracking-tight uppercase border-b border-slate-100 pb-1 mt-6">
-                      {trimmed.replace(/^###\s*/, "")}
-                    </h4>
-                  );
-                }
+                // Preprocess content to ensure headings, dividers, etc. are separated by double newlines
+                const normalizedContent = activeBlog.content
+                  .replace(/^(##+ [^\n]+)$/gm, "\n\n$1\n\n")
+                  .replace(/^(---)$/gm, "\n\n$1\n\n")
+                  .replace(/\n{3,}/g, "\n\n")
+                  .trim();
 
-                // Heading 2 detect
-                if (trimmed.startsWith("##")) {
-                  return (
-                    <h3 key={id} className="text-lg sm:text-xl lg:text-2xl font-black text-slate-900 pt-8 tracking-tight capitalize border-l-2 border-primary pl-2.5 mt-8">
-                      {trimmed.replace(/^##\s*/, "")}
-                    </h3>
-                  );
-                }
+                return normalizedContent.split("\n\n").map((para, id) => {
+                  const trimmed = para.trim();
+                  if (!trimmed) return null;
 
-                // Divider line
-                if (trimmed === "---") {
-                  return <hr key={id} className="border-slate-200/60 my-8" />;
-                }
-
-                // Default Paragraph with strong parsing
-                const formattedText = trimmed.split("**").map((textChunk, chunkIdx) => {
-                  if (chunkIdx % 2 === 1) {
-                    return <strong key={chunkIdx} className="font-extrabold text-slate-950">{textChunk}</strong>;
+                  // 1. Divider line (checked first to avoid matching bullet checks)
+                  if (trimmed === "---") {
+                    return <hr key={id} className="border-slate-200/60 my-8" />;
                   }
-                  return textChunk;
-                });
 
-                return (
-                  <p key={id} className="text-slate-600 leading-relaxed font-sans text-justify">
-                    {formattedText}
-                  </p>
-                );
-              })}
+                  // 2. Blockquote detect
+                  if (trimmed.startsWith(">")) {
+                    return (
+                      <blockquote key={id} className="border-l-4 border-slate-300 bg-slate-50/80 p-4 rounded-r-xl italic my-4 text-slate-600 pl-4">
+                        {parseInlineMarkdown(trimmed.replace(/^>\s*/, "").replace(/[“”"]/g, ""))}
+                      </blockquote>
+                    );
+                  }
+
+                  // 3. Bullet points detect
+                  if (trimmed.startsWith("*") || trimmed.startsWith("-")) {
+                    const bullets = trimmed.split("\n");
+                    return (
+                      <ul key={id} className="list-disc pl-5 space-y-2.5 my-4">
+                        {bullets.map((b, bIdx) => {
+                          const cleanBullet = b.replace(/^[\*\-]\s*/, "");
+                          return (
+                            <li key={bIdx} className="text-slate-600 leading-normal pl-1.5 font-sans">
+                              {parseInlineMarkdown(cleanBullet)}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    );
+                  }
+
+                  // 4. Heading 3 detect
+                  if (trimmed.startsWith("###")) {
+                    return (
+                      <h4 key={id} className="text-base sm:text-lg font-extrabold text-slate-950 pt-5 tracking-tight uppercase border-b border-slate-100 pb-1 mt-6">
+                        {parseInlineMarkdown(trimmed.replace(/^###\s*/, ""))}
+                      </h4>
+                    );
+                  }
+
+                  // 5. Heading 2 detect
+                  if (trimmed.startsWith("##")) {
+                    return (
+                      <h3 key={id} className="text-lg sm:text-xl lg:text-2xl font-black text-slate-900 pt-8 tracking-tight capitalize border-l-2 border-primary pl-2.5 mt-8">
+                        {parseInlineMarkdown(trimmed.replace(/^##\s*/, ""))}
+                      </h3>
+                    );
+                  }
+
+                  // 6. Default Paragraph
+                  return (
+                    <p key={id} className="text-slate-600 leading-relaxed font-sans text-justify">
+                      {parseInlineMarkdown(trimmed)}
+                    </p>
+                  );
+                });
+              })()}
             </div>
 
             {/* Quick reading exit bar */}
