@@ -98,7 +98,7 @@ Your sole purpose is to answer queries using ONLY the facts provided below. You 
 - Doctor's Education & Training: Fellowship at National Institute of Neurosurgery, London (UK) in advanced microsurgical spine decompression; AO Spine Basic in Chennai; AO Spine Advanced in Singapore; Specialist Surgical Training in Switzerland for robotic spinal alignment.
 - Organizational Leadership: Ex-Secretary & President of IMA Chh. Sambhajinagar, Ex-President of Chh. Sambhajinagar Orthopedic Association (AOA), Joint Secretary of ISRM.
 - Philanthropy: Paul Harris Fellow Award (Rotary International). Performed 400+ free corrective surgeries for polio foot deficits. Outreaches with NGO Janarth inside tribal communities of Garkheda.
-- OPD Hours: Monday to Saturday: 10:30 AM to 2:00 PM (Morning), 6:00 PM to 8:30 PM (Evening). Sunday: Closed (Emergency admissions & hospital rounds only).
+- OPD Hours: Monday to Friday: 07:00 PM to 09:00 PM. Saturday & Sunday: Closed.
 - Location/Address: Beside Sai Urology Hospital, Gajanan Maharaj Mandir Road, Garkheda, Chh. Sambhajinagar, Maharashtra - 431009. Parking: Ample road parking, wheelchair-friendly ramp access.
 - Helplines: Call/WhatsApp Helpline: +91 8149407269.
 
@@ -171,18 +171,67 @@ Your sole purpose is to answer queries using ONLY the facts provided below. You 
       const query = trimmed.toLowerCase();
       let reply = "";
 
-      if (query.includes("robotic") || query.includes("knee") || query.includes("joint") || query.includes("replace") || query.includes("surgery") || query.includes("arthrit")) {
-        reply = "🔬 **Robotic Knee Joint Replacement:**\n\nDr. Uday Phute specializes in State-of-the-Art, Fully Automatic Robotic Joint Replacement. Our clinic uses the most advanced medical navigation tools.\n\n• **Sub-millimeter Precision:** Protects healthy ligaments and bone structure.\n• **Minimal Incision:** Decreases pain levels post-surgery.\n• **Rapid Recovery:** Most patients are able to take independent, assisted steps within **24 hours** after surgery.\n\nWould you like to schedule an expert physical evaluation or discuss clinical symptoms?";
-      } else if (query.includes("spine") || query.includes("back") || query.includes("disc") || query.includes("sciatica") || query.includes("spondy") || query.includes("neck") || query.includes("pain")) {
-        reply = "🦴 **Minimally Invasive Spine Orthopedics:**\n\nWe provide complete diagnostic protocols for spinal ailments, treating severe conditions with surgical preservation first where applicable:\n\n• **Keyhole Endoscopic Slipped Disc Relief:** Targeted spinal decompression with a sub-centimeter entry incision.\n• **Sciatica & Stenosis Treatment:** Customized spinal block injections and medical spine strength regimens.\n• **Sciatica & Spondylosis Rehabilitation:** High-grade diagnostic imaging to accurately detect intervertebral narrowing.\n\nWe would be honored to assist you in walking pain-free!";
-      } else if (query.includes("timing") || query.includes("hour") || query.includes("open") || query.includes("schedule") || query.includes("consult") || query.includes("days") || query.includes("when")) {
-        reply = "📅 **OPD Consultation Hours:**\n\nDr. Uday Phute is available for clinic consultations with the following schedule:\n\n• **Monday to Saturday (Morning):** 10:30 AM to 2:00 PM\n• **Monday to Saturday (Evening):** 6:00 PM to 8:30 PM\n• **Sunday:** Closed (Emergency admissions & hospital rounds only)\n\nTo lock your clinical Slot, click the **Request Appointment** button above or click the Floating **WhatsApp Button** below to send an instant booking request!";
-      } else if (query.includes("address") || query.includes("location") || query.includes("where") || query.includes("direction") || query.includes("map") || query.includes("landm")) {
+      if (
+        query.includes("address") ||
+        query.includes("location") ||
+        query.includes("where") ||
+        query.includes("direction") ||
+        query.includes("map") ||
+        query.includes("landm") ||
+        query.includes("reach") ||
+        query.includes("located") ||
+        query.includes("situated")
+      ) {
         reply = "📍 **Clinic Location & Directions:**\n\nSai Joint & Spine Clinic is highly accessible, situated adjacent to Sai Urology Hospital:\n\n🏠 **Landmark Address:**\nGajanan Maharaj Mandir Road, Garkheda, Chh. Sambhajinagar, Maharashtra - 431009.\n\n• Wheelchair-friendly ramp access is fully active.\n• Ample road parking is available on-site.";
-      } else if (query.includes("hello") || query.includes("hi") || query.includes("hey") || query.includes("greetings") || query.includes("name") || query.includes("doctor")) {
-        reply = "🏥 Hello there! I am Dr. Uday Phute's clinical AI Assistant.\n\nHow may I support you today? You can ask me anything about:\n\n1. **Robotic Knee Joint Replacements** 🔬\n2. **Minimally Invasive Spine & Disc Surgeries** 🦴\n3. **Clinic Consultation Hours & Timings** 📅\n4. **How to Book an Appointment** 📅\n\nPlease let me know your symptoms, or what questions you have!";
-      } else if (query.includes("contact") || query.includes("phone") || query.includes("call") || query.includes("number") || query.includes("mobile") || query.includes("whatsapp")) {
+      } else if (
+        query.includes("timing") ||
+        query.includes("hour") ||
+        query.includes("open") ||
+        query.includes("schedule") ||
+        query.includes("consult") ||
+        query.includes("days") ||
+        query.includes("when")
+      ) {
+        reply = "📅 **OPD Consultation Hours:**\n\nDr. Uday Phute is available for clinic consultations with the following schedule:\n\n• **Monday to Friday:** 07:00 PM to 09:00 PM\n• **Saturday & Sunday:** Closed (Emergency admissions & hospital rounds only)\n\nTo lock your clinical Slot, click the **Request Appointment** button above or click the Floating **WhatsApp Button** below to send an instant booking request!";
+      } else if (
+        query.includes("contact") ||
+        query.includes("phone") ||
+        query.includes("call") ||
+        query.includes("number") ||
+        query.includes("mobile") ||
+        query.includes("whatsapp")
+      ) {
         reply = "📞 **Clinic Helplines:**\n\nTo speak directly to our receptionist or book a priority slot, please use:\n\n• **Call / WhatsApp Helpline:** +91 8149407269\n• **Interactive Scheduling:** You can fill out the interactive appointment booking form right inside this page by clicking requests.";
+      } else if (
+        query.includes("hello") ||
+        query.includes("hi") ||
+        query.includes("hey") ||
+        query.includes("greetings") ||
+        query.includes("name") ||
+        query.includes("doctor")
+      ) {
+        reply = "🏥 Hello there! I am Dr. Uday Phute's clinical AI Assistant.\n\nHow may I support you today? You can ask me anything about:\n\n1. **Robotic Knee Joint Replacements** 🔬\n2. **Minimally Invasive Spine & Disc Surgeries** 🦴\n3. **Clinic Consultation Hours & Timings** 📅\n4. **How to Book an Appointment** 📅\n\nPlease let me know your symptoms, or what questions you have!";
+      } else if (
+        query.includes("robotic") ||
+        query.includes("knee") ||
+        query.includes("hip") ||
+        query.includes("joint replacement") ||
+        query.includes("joint pain") ||
+        query.includes("replace") ||
+        query.includes("surgery") ||
+        query.includes("arthrit")
+      ) {
+        reply = "🔬 **Robotic Knee Joint Replacement:**\n\nDr. Uday Phute specializes in State-of-the-Art, Fully Automatic Robotic Joint Replacement. Our clinic uses the most advanced medical navigation tools.\n\n• **Sub-millimeter Precision:** Protects healthy ligaments and bone structure.\n• **Minimal Incision:** Decreases pain levels post-surgery.\n• **Rapid Recovery:** Most patients are able to take independent, assisted steps within **24 hours** after surgery.\n\nWould you like to schedule an expert physical evaluation or discuss clinical symptoms?";
+      } else if (
+        query.includes("spine") ||
+        query.includes("back") ||
+        query.includes("disc") ||
+        query.includes("sciatica") ||
+        query.includes("spondy") ||
+        query.includes("neck") ||
+        query.includes("pain")
+      ) {
+        reply = "🦴 **Minimally Invasive Spine Orthopedics:**\n\nWe provide complete diagnostic protocols for spinal ailments, treating severe conditions with surgical preservation first where applicable:\n\n• **Keyhole Endoscopic Slipped Disc Relief:** Targeted spinal decompression with a sub-centimeter entry incision.\n• **Sciatica & Stenosis Treatment:** Customized spinal block injections and medical spine strength regimens.\n• **Sciatica & Spondylosis Rehabilitation:** High-grade diagnostic imaging to accurately detect intervertebral narrowing.\n\nWe would be honored to assist you in walking pain-free!";
       } else {
         reply = "🏥 **Sai Joint & Spine Clinic Support:**\n\nThank you for reaching out! To assist you best:\n\n• Dr. Uday Phute specializes in **Fully Automatic Robotic Knee Replacements** and **Endoscopic Spine Micro-surgeries**.\n• We are located on **Gajanan Maharaj Mandir Road, Garkheda, Chh. Sambhajinagar**.\n• You can book a priority consult on the website or via **WhatsApp** (+91 8149407269).\n\nPlease ask about joint replacement, spine treatments, scheduling, or help with any pain symptoms!";
       }
